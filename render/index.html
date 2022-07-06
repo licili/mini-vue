@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./renderer.js"></script>
+    <script>
+      // 1. 通过 h 函数 创建一个 vnode
+      const vnode = h("div", { class: "box" }, [
+        h("h2", null, "当前计数：100"),
+        h(
+          "button",
+          {
+            onClick: () => {
+              console.log("click");
+            },
+          },
+          "+1"
+        ),
+      ]);
+
+      // 2. 通过 mount 函数 将 vnode 挂载到 div#app 上
+      mount(vnode, document.getElementById("app"));
+      console.log(vnode, "vnode");
+
+      // 3. 创建新的 vnode
+      const newVnode = h("div", { class: "coder" }, "hello world");
+      // 两个 vnode 进行 diff 算法，看哪里需要修改，然后更新界面
+      setTimeout(() => {
+        patch(vnode, newVnode);
+      }, 2000);
+    </script>
+  </body>
+</html>
